@@ -1,26 +1,82 @@
-// import React, { Component } from 'react';
-// import { Searchbar } from './Searchbar/Searchbar';
-// import { ImageGallery } from './ImageGallery/ImageGallery';
-// import Modal from './Modal';
-// import { Blocks } from 'react-loader-spinner';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import Modal from './Modal';
+import { Blocks } from 'react-loader-spinner';
 // import { ToastContainer } from 'react-toastify';
-// import { LoadMoreBtn } from './Button/Button';
-// import { fetchImages } from './FetchImages/FetchImages';
+import { LoadMoreBtn } from './Button/Button';
 
-// import { useState } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
+import { fetchImages } from './FetchImages/FetchImages';
 
 export const App = () => {
-  // const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
+  const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [largeImage, setLargeImage] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const onSubmit = query => {
-    // setQuery(query);
+    setQuery(query);
     console.log(query);
+  };
+
+  const onLargeImageURL = largeImageURL => {
+    setShowModal(!showModal);
+    setLargeImage(largeImageURL);
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    fetchImages(query, page)
+      .then(response => {
+        if (response) {
+          const newArray = response.hits;
+          const totalHits = response.totalHits;
+
+          return (
+            setImages([...images, ...newArray]),
+            setShowBtn(page < Math.ceil(totalHits / 12))
+          );
+        }
+      })
+      .catch(error => setError({ error }))
+      .finally(() => setIsLoading(false));
+  }, [query, page]);
+
+  const onLoadMore = () => {
+    setIsVisible(false);
+    setPage(page + 1);
   };
 
   return (
     <div>
+      {showModal && <Modal onClose={toggleModal} largeImage={largeImage} />}
       <Searchbar onSubmit={onSubmit} />
+      {isLoading && (
+        <Blocks
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+        />
+      )}
+      {error && <h1>{error.message}</h1>}
+      {images.length > 0 && (
+        <ImageGallery images={images} onClick={onLargeImageURL} />
+      )}
+      {showBtn && <LoadMoreBtn onClick={onLoadMore} />}
     </div>
   );
 };

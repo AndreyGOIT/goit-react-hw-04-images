@@ -1,26 +1,24 @@
-// // import PropTypes from 'prop-types';
-// import { Component } from 'react';
 import styles from './Searchbar.module.css';
 // import { toast } from 'react-toastify';
 import { ImSearch } from 'react-icons/im';
 import { useState } from 'react';
-// import { useEffect } from 'react';
 
-export const Searchbar = () => {
+export const Searchbar = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
   console.log(query);
 
   const handleInput = e => {
     const { value } = e.currentTarget;
-
     setQuery(value.toLowerCase().trim());
   };
+
   const handleSubmit = e => {
     e.preventdefault();
     if (query === '') {
       alert('Input some word!');
       return;
     }
+    onSubmit(query);
     setQuery('');
   };
   //   handleSubmit = e => {
