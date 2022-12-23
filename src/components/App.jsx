@@ -7,14 +7,15 @@
 // import { LoadMoreBtn } from './Button/Button';
 // import { fetchImages } from './FetchImages/FetchImages';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 
 export const App = () => {
-  const [query, setQuery] = useState('');
+  // const [query, setQuery] = useState('');
 
   const onSubmit = query => {
-    setQuery(query);
+    // setQuery(query);
+    console.log(query);
   };
 
   return (
