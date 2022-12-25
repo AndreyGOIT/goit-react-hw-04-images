@@ -13,7 +13,7 @@ export const Searchbar = ({ onSubmit }) => {
   };
 
   const handleSubmit = e => {
-    e.preventdefault();
+    e.preventDefault();
     if (query === '') {
       alert('Input some word!');
       return;
