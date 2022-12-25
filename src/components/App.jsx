@@ -44,7 +44,7 @@ export const App = () => {
           const totalHits = response.totalHits;
 
           return (
-            setImages([...images, ...newArray]),
+            setImages(prevImages => [...prevImages, ...newArray]),
             setShowBtn(page < Math.ceil(totalHits / 12))
           );
         }
