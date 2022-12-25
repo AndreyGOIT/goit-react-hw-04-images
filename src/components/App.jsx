@@ -23,6 +23,9 @@ export const App = () => {
 
   const onSubmit = query => {
     setQuery(query);
+    setImages([]);
+    setPage(1);
+    setIsLoading(false);
     console.log(query);
   };
 
@@ -32,6 +35,9 @@ export const App = () => {
   };
 
   useEffect(() => {
+    if (!query) {
+      return;
+    }
     setIsLoading(true);
 
     fetchImages(query, page)
