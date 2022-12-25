@@ -3,9 +3,7 @@ import Modal from './Modal';
 import { Blocks } from 'react-loader-spinner';
 // import { ToastContainer } from 'react-toastify';
 import { LoadMoreBtn } from './Button/Button';
-
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from './FetchImages/FetchImages';
 
@@ -18,7 +16,6 @@ export const App = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [largeImage, setLargeImage] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -54,7 +51,6 @@ export const App = () => {
   }, [query, page]);
 
   const onLoadMore = () => {
-    setIsVisible(false);
     setPage(page + 1);
   };
 

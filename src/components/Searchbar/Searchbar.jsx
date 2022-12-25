@@ -21,18 +21,6 @@ export const Searchbar = ({ onSubmit }) => {
     onSubmit(query);
     setQuery('');
   };
-  //   handleSubmit = e => {
-  //     e.preventDefault();
-  //     const { query } = this.state;
-  //     // console.log(query);
-  //     if (query === '') {
-  //       // toast.error('Input something!');
-  //       alert('Input some world!');
-  //       return;
-  //     }
-  //     this.props.onSubmit(query);
-  //     this.setState({ query: '' });
-  //   };
 
   return (
     <>
